@@ -74,3 +74,11 @@ class CounterTest(TestCase):
         """Should successfully return 404 status on attempt to get missing counter"""
         result = self.client.get('counters/narnia')
         self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_deleting_counter(self):
+        """Should have successfully deleted a counter and returned a 204_NO_CONTENT"""
+        # Only implementing the deletion with signal 204 so not really worried about other signals. Meh.
+        result = self.client.post('/counters/testDelete')
+        self.assertEqual(result.satus_code, status.HTTP_201_CREATED) # Just make sure a counter was created
+        resultDel = self.client.delete('counters/testDelete')
+        self.assertEqual(resultDel.status_code, status.HTTP_204_NO_CONTENT)
