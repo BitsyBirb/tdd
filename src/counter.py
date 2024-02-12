@@ -44,3 +44,14 @@ def get_counter(name):
     if name not in COUNTERS:
         return {"Message": f"Counter {name} doesn't exist"}, status.HTTP_404_NOT_FOUND
     return {name: COUNTERS[name]}, status.HTTP_200_OK
+
+@app.route('/counters/<name>', methods=['DELETE'])
+def delete_counter(name):
+    """Should delete a counter"""
+    app.logger.info(f"Request to delete counter: {name}")
+    global COUNTERS
+    # Doesn't have to return the code 404_NOT_FOUND as not in specifications of REST API, but will anyways I guess
+    if name not in COUNTERS:
+        return {"Message": f"Counter {name} doesn't exist"}, status.HTTP_404_NOT_FOUND
+    del COUNTERS[name]
+    return {"Message": f"Counter {name} successfully deleted!"}, status.HTTP_204_NO_CONTENT
