@@ -1,12 +1,14 @@
+from src import status
+
 from flask import Flask
 app = Flask(__name__)
 
-from src import status
 
 COUNTERS = {}
 
+
 @app.route('/counters/<name>', methods=['POST'])
-def create_counter(name):
+def create_counter(name): 
     """Create a counter"""
     app.logger.info(f"Request to create counter: {name}")
     global COUNTERS
@@ -18,7 +20,7 @@ def create_counter(name):
 
 # Route as put method
 @app.route('/counters/<name>', methods=['PUT'])
-def update_counter(name):
+def update_counter(name): 
     """Update a counter"""
     # Create a route for method PUT on endpoint /counters/<name>
     app.logger.info(f"Request to update counter: {name}")
@@ -34,7 +36,7 @@ def update_counter(name):
 
 
 @app.route('/counters/<name>', methods=['GET'])
-def get_counter(name):
+def get_counter(name): 
     """Should get a counter"""
     # Very similar to update without the increment I think
     app.logger.info(f"Request to get counter: {name}")
