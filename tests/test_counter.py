@@ -82,3 +82,17 @@ class CounterTest(TestCase):
         self.assertEqual(result.status_code, status.HTTP_201_CREATED) # Just make sure a counter was created
         resultDel = self.client.delete('counters/testDelete')
         self.assertEqual(resultDel.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_error(self):
+        """When repeat delete on a counter or deletion of non-existent counter, should return 404_NOT_FOUND"""
+        result = self.client.post('/counters/testRepeatDeletion')
+        self.assertEqual(result.status_code, status.HTTP_201_CREATED)
+        # Delete once, check status code
+        result = self.client.delete('/counters/testRepeatDeletion')
+        self.assertEqual(result.status_code, status.HTTP_204_NO_CONTENT)
+        # Finally delete again and check the code.
+        result = self.client.delete('/counters/testRepeatDeletion')
+        self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
+        # Also check to make sure deletoin of nonexistent returns 404
+        result = self.client.delete('counters/shouldNotExist')
+        self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
