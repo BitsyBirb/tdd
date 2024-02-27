@@ -38,6 +38,7 @@ def process_folder(folder_path):
         print(f"\nAverage Comment Percentage: {average_comment_percentage:.2f}%")
         if successful_check == False:
             print("\nAt least one file had less than 30% of commented lines.\nPlease be sure to add proper documentation to those files.")
+            exit(1) # Should fail the CI?
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
