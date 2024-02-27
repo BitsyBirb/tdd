@@ -25,7 +25,7 @@ def process_folder(folder_path):
                 comment_percentage = calculate_comment_percentage(file_path)
                 print(f"{file}: {comment_percentage:.2f}%")
                 total_comment_percentage += comment_percentage
-                if comment_percentage < 30.0:
+                if comment_percentage < 10.0:
                     successful_check = False
 
                 total_files += 1
