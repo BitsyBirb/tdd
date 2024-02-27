@@ -21,11 +21,9 @@ jobs:
 
       - name: Lint with flake8
         run: flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics | flake8 src --count --max-complexity=10 --max-line-length=127 --statistics
-      
-      # Made by ChatGPT, exits 1 if not enough comments (30%) in all the python files.
-      - name: Check Comment Percentage using Radon
-        run: radon cc -a -s -i src paths | grep -E '^\s+.*Python$' | awk '{if($NF >= 30) exit 0; else exit 1}'
 
       - name: Run unit tests with nose
         run:  nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
 
+      - name: Check Comment Percentage
+        run: python3 .github/scripts/check_comments.py ./src
