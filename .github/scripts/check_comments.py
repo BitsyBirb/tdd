@@ -14,6 +14,9 @@ def calculate_comment_percentage(file_path):
         return (comment_lines / total_lines) * 100
 
 def process_folder(folder_path):
+    desired_comment_percentage = 20.0
+    print(f"Every file should have at least {desired_comment_percentage:.2f}% of lines commented.")
+
     total_comment_percentage = 0
     total_files = 0
     successful_check = True;
@@ -25,7 +28,7 @@ def process_folder(folder_path):
                 comment_percentage = calculate_comment_percentage(file_path)
                 print(f"{file}: {comment_percentage:.2f}%")
                 total_comment_percentage += comment_percentage
-                if comment_percentage < 10.0:
+                if comment_percentage < desired_comment_percentage:
                     successful_check = False
 
                 total_files += 1
@@ -37,7 +40,7 @@ def process_folder(folder_path):
         average_comment_percentage = total_comment_percentage / total_files
         print(f"\nAverage Comment Percentage: {average_comment_percentage:.2f}%")
         if successful_check == False:
-            print("\nAt least one file had less than 30% of commented lines.\nPlease be sure to add proper documentation to those files.")
+            print(f"\nAt least one file had less than {desired_comment_percentage:.2f}% of commented lines.\nPlease be sure to add proper documentation to those files.")
             exit(1) # Should fail the CI?
 
 if __name__ == "__main__":
